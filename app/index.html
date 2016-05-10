@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Basic Angular App</title>
+  <link rel="stylesheet" type="text/css" href="/css/base.css">
+</head>
+<body data-ng-app="demoApp">
+  <section>
+    <h1>To Do: {{ todo }}</h1>
+    <input type="text" data-ng-model="todo">
+    <button data-ng-click="todo=''">Delete</button>
+  </section>
+  <script src="./bundle.js"></script>
+</body>
+</html>

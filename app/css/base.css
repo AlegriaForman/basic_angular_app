@@ -1,0 +1,14 @@
+h1 {
+  font-size: 1.5em;
+  color: blue;
+  font-family: "Rosarivo", Serif;
+}
+
+button, input {
+  font-size: 1.2em;
+  font-family: "Rosarivo", Serif;
+}
+
+section {
+  margin: 40px 0 0 40px;
+}
