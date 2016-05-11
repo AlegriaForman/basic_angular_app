@@ -1,11 +1,11 @@
 {
   "env": {
     "mocha": true,
-    "node": true,
+    "browser": true,
     "es6": true
   },
   "globals": {
-    "expect": true,
+    "element": true,
     "browser": true,
     "by": true
   },
