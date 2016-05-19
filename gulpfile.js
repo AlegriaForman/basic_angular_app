@@ -1,7 +1,9 @@
 const gulp = require('gulp');
 const webpack = require('webpack-stream');
 const eslint = require('gulp-eslint');
-
+const protractor = require('gulp-protractor').protractor;
+const cp = require('child_process');
+var children = [];
 var paths = ['**/*.js', '!build/**', '!node_modules/**', '!test_and_integration/**'];
 
 gulp.task('webpack:dev', () => {
@@ -20,8 +22,20 @@ gulp.task('static:dev', () => {
     .pipe(gulp.dest('./build'));
 });
 
-gulp.task('protractor:test', () => {
-  gulp.src('test_and_integration/config.js');
+gulp.task('protractor:test', ['build:dev', 'servers:test'], () => {
+  gulp.src('test_and_integration/*_spec.js')
+    .pipe(protractor({
+      configFile: 'test_and_integration/config.js'
+    }))
+    .on('end', () => {
+      children.forEach((child) => {
+        child.kill('SIGTERM');
+      });
+    });
+});
+
+gulp.task('servers:test', () => {
+  children.push(cp.fork('server.js'));
 });
 
 gulp.task('lint:nontest', () => {
@@ -42,6 +56,7 @@ gulp.task('lint:server', () => {
     .pipe(eslint.format());
 });
 
-gulp.task('build:dev', ['webpack:dev', 'static:dev', 'protractor:test']);
-gulp.task('default', ['build:dev']);
+gulp.task('build:dev', ['webpack:dev', 'static:dev']);
 gulp.task('lint', ['lint:nontest', 'lint:client', 'lint:server']);
+gulp.task('test', ['protractor:test']);
+gulp.task('default', ['test', 'lint']);
