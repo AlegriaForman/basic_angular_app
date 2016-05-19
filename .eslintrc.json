@@ -5,7 +5,9 @@
     "es6": true
   },
   "globals": {
-
+    "expect": true,
+    "browser": true,
+    "by": true
   },
   "rules": {
     "indent": ["error", 2],
